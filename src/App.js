@@ -8,11 +8,12 @@ import Contact from './Pages/Contact/Contact';
 import Home from './Pages/Home/Home/Home';
 import NotFound from './Pages/NotFound/NotFound';
 import Reviews from './Pages/Reviews/Reviews';
+import Footer from './Pages/Shares/Footer/Footer';
 import Navbar from './Pages/Shares/Navbar/Navbar';
 
 function App() {
   return (
-    <div>
+    <div className='md:px-16'>
       <Navbar></Navbar>
       <Routes>
         <Route path='/' element={<Home />}></Route>
@@ -25,6 +26,7 @@ function App() {
         <Route path='/register' element={<Register />}></Route>
         <Route path='*' element={<NotFound />}></Route>
       </Routes>
+      <Footer></Footer>
     </div>
   );
 }
