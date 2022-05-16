@@ -4,11 +4,11 @@ import GradientButton from '../../Shares/GradientButton/GradientButton';
 
 const DentalCard = () => {
     return (
-        <div className="card lg:card-side shadow-xl mb-20">
-            <figure className='w-1/2'>
+        <div className="card lg:card-side shadow-xl mb-20 p-2">
+            <figure className=' w-full lg:w-1/2 '>
                 <img className='h-[458px] w-full' src={treatment} alt="Album" />
             </figure>
-            <div className="card-body">
+            <div className="card-body w-full lg:w-1/2">
                 <h2 className="card-title text-4xl font-bold">Exceptional Dental Care on Your Stones Throw</h2>
                 <p>Click the button to listen on Spotiwhy app.</p>
                 <div className="card-actions justify-start">
