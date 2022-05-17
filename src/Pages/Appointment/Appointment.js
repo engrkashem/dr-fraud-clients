@@ -15,7 +15,7 @@ const Appointment = () => {
     const [services] = useGetData(url);
     const [treatment, setTreatment] = useState(null);
 
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
 
 
     return (

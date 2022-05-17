@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import auth from '../../../firebase.init';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ const Login = () => {
 
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
 
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, getValues } = useForm();
 
     const [
         signInWithEmailAndPassword,
@@ -16,6 +16,10 @@ const Login = () => {
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
+
+    const [sendPasswordResetEmail, sending, rError] = useSendPasswordResetEmail(
+        auth
+    );
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -27,19 +31,25 @@ const Login = () => {
         }
     }, [user, gUser, from, navigate]);
 
-    if (loading || gLoading) {
+    if (loading || gLoading || sending) {
         return <button className="btn loading">loading</button>;
     }
 
     let errorMessage;
-    if (error || gError) {
-        errorMessage = <p className='text-rose-500'>{error?.message || gError?.message}</p>;
+    if (error || gError || rError) {
+        errorMessage = <p className='text-rose-500'>{error?.message || gError?.message || rError?.message}</p>;
     }
 
     const onSubmit = data => {
         // console.log(data);
         signInWithEmailAndPassword(data.email, data.password);
     };
+
+    const resetPassword = async () => {
+        const email = getValues('email');
+        console.log(email)
+        await sendPasswordResetEmail(email);
+    }
     return (
         <div className=' flex h-screen justify-center items-center'>
             <div className="card w-96 lg:w-1/2 bg-base-100 shadow-xl">
@@ -55,7 +65,8 @@ const Login = () => {
                             </label>
                             <input
                                 type="email"
-                                placeholder="Your Email" className="input input-bordered w-full "
+                                placeholder="Your Email"
+                                className="input input-bordered w-full "
                                 {...register("email", {
                                     required: {
                                         value: true,
@@ -115,6 +126,8 @@ const Login = () => {
                         <input className='btn btn-outline btn-accent w-1/2 mx-auto block' type="submit" value='LOGIN' />
                     </form>
                     {errorMessage}
+                    <p onClick={resetPassword} className=' font-semibold mt-5'>Forgot Password?<button className=' text-secondary btn btn-link'> Reset Password</button></p>
+
                     <p className=' font-semibold mt-5'>New to Dr FAUST? <Link to={'/register'} className=' text-secondary'>Create New Account</Link></p>
 
                     <div className="divider">OR</div>
