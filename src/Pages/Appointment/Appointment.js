@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 import useGetData from '../../hooks/useGetData';
 import Banner from '../Shares/Banner/Banner';
 import Footer from '../Shares/Footer/Footer';
@@ -12,6 +14,9 @@ const Appointment = () => {
     const url = `http://localhost:5000/services`
     const [services] = useGetData(url);
     const [treatment, setTreatment] = useState(null);
+
+    const [user, loading, error] = useAuthState(auth);
+
 
     return (
         <div>
@@ -30,6 +35,7 @@ const Appointment = () => {
                 treatment={treatment}
                 date={date}
                 setTreatment={setTreatment}
+                user={user}
             />}
             <Footer />
         </div>

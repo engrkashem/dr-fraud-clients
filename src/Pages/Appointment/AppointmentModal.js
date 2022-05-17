@@ -1,8 +1,11 @@
 import { format } from 'date-fns';
 import React from 'react';
 
-const AppointmentModal = ({ treatment, date, setTreatment }) => {
+const AppointmentModal = ({ treatment, date, setTreatment, user }) => {
     const { _id, name, slots } = treatment;
+    const { displayName, email } = user;
+    // console.log(displayName, email)
+
     const handleAppointment = e => {
         e.preventDefault();
         const timeSlot = e.target.slot.value;
@@ -22,11 +25,14 @@ const AppointmentModal = ({ treatment, date, setTreatment }) => {
                         <select name='slot' defaultValue={'default'} className="select select-secondary w-full max-w-xs">
                             <option disabled value={'default'}>Pick your Time Slots</option>
 
-                            {slots.map(slot => <option key={slot} value={slot}>{slot}</option>)}
+                            {slots.map((slot, index) => <option
+                                key={index}
+                                value={slot}
+                            >{slot}</option>)}
                         </select>
-                        <input name='name' type="text" placeholder="Name" className="input input-bordered input-secondary w-full max-w-xs" />
+                        <input name='name' type="text" disabled value={displayName || ''} className="input input-bordered input-secondary w-full max-w-xs" />
                         <input name='phone' type="text" placeholder="Phone" className="input input-bordered input-secondary w-full max-w-xs" />
-                        <input name='email' type="email" placeholder="Email" className="input input-bordered input-secondary w-full max-w-xs" />
+                        <input name='email' type="email" disabled value={email || ''} className="input input-bordered input-secondary w-full max-w-xs" />
                         <input type="submit" value="Confirm Appointment" className="btn btn-secondary text-white max-w-xs" />
 
                     </form>

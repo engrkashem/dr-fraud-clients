@@ -4,6 +4,7 @@ import About from './Pages/About/About';
 import Appointment from './Pages/Appointment/Appointment';
 import Login from './Pages/Auth/Login/Login';
 import Register from './Pages/Auth/Register/Register';
+import RequireAuth from './Pages/Auth/RequireAuth/RequireAuth';
 import Contact from './Pages/Contact/Contact';
 import Home from './Pages/Home/Home/Home';
 import NotFound from './Pages/NotFound/NotFound';
@@ -18,7 +19,11 @@ function App() {
         <Route path='/' element={<Home />}></Route>
         <Route path='/home' element={<Home />}></Route>
         <Route path='/about' element={<About />}></Route>
-        <Route path='/appointment' element={<Appointment />} />
+        <Route path='/appointment' element={
+          <RequireAuth>
+            <Appointment />
+          </RequireAuth>
+        } />
         <Route path='/reviews' element={<Reviews />}></Route>
         <Route path='/contact-us' element={<Contact />} />
         <Route path='/login' element={<Login />}></Route>
