@@ -1,19 +1,51 @@
+import { success } from 'daisyui/src/colors';
 import { format } from 'date-fns';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const AppointmentModal = ({ treatment, date, setTreatment, user }) => {
     const { _id, name, slots } = treatment;
     const { displayName, email } = user;
+    const formatedDate = format(date, 'PP');
     // console.log(displayName, email)
 
     const handleAppointment = e => {
         e.preventDefault();
         const timeSlot = e.target.slot.value;
-        console.log(_id, timeSlot);
-        setTreatment(null);
+        // console.log(_id, timeSlot);
+        const bookingInfo = {
+            treatmentId: _id,
+            treatmentName: name,
+            date: formatedDate,
+            timeSlot,
+            patientEmail: email,
+            patientName: displayName,
+            phone: e.target.phone.value
+        }
+        // send bppkin to server
+        const url = `http://localhost:5000/booking`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(bookingInfo),
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.success) {
+                    toast(`Your Appointment is Confirmed at ${timeSlot} on ${formatedDate}`);
+                }
+                else {
+                    toast.error(`You have already appointment in ${data?.bookingInfoDoc?.date} at ${data?.bookingInfoDoc?.timeSlot}`)
+                }
+                //to close modal
+                setTreatment(null);
+            })
     }
     return (
         <div>
+            {success}
             <input type="checkbox" id="appointment-modal" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box relative">
