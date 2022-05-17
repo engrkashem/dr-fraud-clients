@@ -3,10 +3,9 @@ import { format } from 'date-fns';
 import React from 'react';
 import { toast } from 'react-toastify';
 
-const AppointmentModal = ({ treatment, date, setTreatment, user }) => {
+const AppointmentModal = ({ treatment, date, setTreatment, user, formatedDate, refetch }) => {
     const { _id, name, slots } = treatment;
     const { displayName, email } = user;
-    const formatedDate = format(date, 'PP');
     // console.log(displayName, email)
 
     const handleAppointment = e => {
@@ -23,7 +22,8 @@ const AppointmentModal = ({ treatment, date, setTreatment, user }) => {
             phone: e.target.phone.value
         }
         // send bppkin to server
-        const url = `http://localhost:5000/booking`;
+        // const url = `http://localhost:5000/booking`;
+        const url = `https://damp-basin-02445.herokuapp.com/booking`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -39,6 +39,8 @@ const AppointmentModal = ({ treatment, date, setTreatment, user }) => {
                 else {
                     toast.error(`You have already appointment in ${data?.bookingInfoDoc?.date} at ${data?.bookingInfoDoc?.timeSlot}`)
                 }
+                //update ui instantly using react query feature.
+                refetch();
                 //to close modal
                 setTreatment(null);
             })

@@ -13,16 +13,6 @@ const Navbar = () => {
     }
 
     const links = <>
-        <li tabIndex="0">
-            <Link to={'/'} className="justify-between">
-                Admin
-                <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
-            </Link>
-            <ul className="p-2">
-                <li className='hover-bordered'><Link to={'/'}>Submenu 1</Link></li>
-                <li className='hover-bordered'><Link to={'/'}>Submenu 2</Link></li>
-            </ul>
-        </li>
         <li><NavLink to={'/'} className={({ isActive }) =>
             isActive ? 'bg-primary text-white' : ''
         }>HOME</NavLink></li>
@@ -38,9 +28,19 @@ const Navbar = () => {
         <li><NavLink to={'contact-us'} className={({ isActive }) =>
             isActive ? 'bg-primary text-white' : ''
         }>CONTACT</NavLink></li>
-        <li>{user ?
-            <Link onClick={LogOut} to={'/login'} className=" bg-neutral text-white w-28">SIGN OUT</Link> :
-            <Link to={'/login'} className=" bg-neutral text-white ">LOGIN</Link>}</li>
+        {user ?
+            <>
+                <li>
+                    <Link to={'/dashboard'} className={({ isActive }) =>
+                        isActive ? 'bg-primary text-white' : ''
+                    }>DASHBOARD</Link>
+                </li>
+                <li>
+                    <Link onClick={LogOut} to={'/login'} className=" bg-neutral text-white w-28">SIGN OUT</Link>
+                </li>
+            </> :
+            <li><Link to={'/login'} className=" bg-neutral text-white ">LOGIN</Link></li>
+        }
     </>
     return (
         <div className="navbar bg-base-100 ">
@@ -55,10 +55,27 @@ const Navbar = () => {
                 </div>
                 <Link to={'/'} className="btn btn-ghost normal-case text-xl">DOCTOR FAUST</Link>
             </div>
-            <div className="navbar-end hidden lg:flex font-semibold">
+            <div className="navbar-center hidden lg:flex font-semibold">
                 <ul className="menu menu-horizontal p-0">
                     {links}
                 </ul>
+            </div>
+            <div className="navbar-end lg:hidden">
+                <label
+                    htmlFor="dashboard-sidebar-left"
+                    tabIndex="1"
+                    className="btn btn-ghost">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg" className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path
+                            strokeLinecap="round" strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M4 6h16M4 12h8m-8 6h16" />
+                    </svg>
+                </label>
             </div>
 
         </div>
