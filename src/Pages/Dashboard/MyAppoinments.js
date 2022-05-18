@@ -4,6 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import TableRow from './TableRow';
 
 const MyAppoinments = () => {
     const [user] = useAuthState(auth);
@@ -48,17 +49,11 @@ const MyAppoinments = () => {
                     </thead>
                     <tbody>
                         {
-                            bookings?.map((b, index) => <tr
-                                key={b._id}
-                            >
-                                <th>{index + 1}</th>
-                                <td>{b.patientName
-                                }</td>
-                                <td>{b.date}</td>
-                                <td>{b.treatmentName
-                                }</td>
-                                <td>{b.timeSlot}</td>
-                            </tr>)
+                            bookings?.map((booking, index) => <TableRow
+                                key={booking._id}
+                                booking={booking}
+                                index={index}
+                            ></TableRow>)
                         }
 
                     </tbody>
