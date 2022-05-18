@@ -6,11 +6,16 @@ import auth from '../../firebase.init';
 const MyAppoinments = () => {
     const [user] = useAuthState(auth);
 
-    // const url = `http://localhost:5000/booking?patient=${user?.email}`;
-    const url = `https://damp-basin-02445.herokuapp.com/booking?patient=${user?.email}`;
+    const url = `http://localhost:5000/booking?patient=${user?.email}`;
+    // const url = `https://damp-basin-02445.herokuapp.com/booking?patient=${user?.email}`;
 
     //react query is used to load data
-    const { data: bookings, isLoading } = useQuery(['availableSlots', user], () => fetch(url).then(res => res.json()))
+    const { data: bookings, isLoading } = useQuery(['availableSlots', user], () => fetch(url, {
+        method: 'GET',
+        headers: {
+            'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+    }).then(res => res.json()))
 
     if (isLoading) {
         return <button className="btn loading">loading</button>;
