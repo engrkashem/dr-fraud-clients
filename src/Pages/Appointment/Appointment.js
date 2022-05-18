@@ -23,6 +23,7 @@ const Appointment = () => {
     const [treatment, setTreatment] = useState(null);
 
     const [user] = useAuthState(auth);
+    // console.log(user)
 
     if (isLoading) {
         return <button className="btn loading">loading</button>;

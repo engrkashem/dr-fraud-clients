@@ -31,15 +31,22 @@ const Navbar = () => {
         {user ?
             <>
                 <li>
-                    <Link to={'/dashboard'} className={({ isActive }) =>
+                    <NavLink to={'/dashboard'} className={({ isActive }) =>
                         isActive ? 'bg-primary text-white' : ''
-                    }>DASHBOARD</Link>
+                    }>DASHBOARD</NavLink>
                 </li>
                 <li>
-                    <Link onClick={LogOut} to={'/login'} className=" bg-neutral text-white w-28">SIGN OUT</Link>
+                    <span className=" bg-neutral text-white w-28">
+                        <Link onClick={LogOut} to={'/login'} >SIGN OUT</Link>
+                    </span>
+
                 </li>
             </> :
-            <li><Link to={'/login'} className=" bg-neutral text-white ">LOGIN</Link></li>
+            <li>
+                <span className=" bg-neutral text-white ">
+                    <Link to={'/login'} >LOGIN</Link>
+                </span>
+            </li>
         }
     </>
     return (

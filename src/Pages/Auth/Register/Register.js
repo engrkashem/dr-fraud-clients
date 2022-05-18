@@ -3,6 +3,7 @@ import auth from '../../../firebase.init';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
+import useToken from '../../../hooks/useToken';
 
 const Register = () => {
 
@@ -21,6 +22,8 @@ const Register = () => {
 
     const navigate = useNavigate();
 
+    const [token] = useToken(user || gUser);
+
     if (loading || gLoading || updating) {
         return <button className="btn loading">loading</button>;
     }
@@ -30,15 +33,16 @@ const Register = () => {
         errorMessage = <p className='text-rose-500'>{error?.message || gError?.message || uError?.message}</p>;
     }
 
-    if (user || gUser) {
+    if (token) {
         // console.log(user);
+        navigate('/appointment');
     }
 
     const onSubmit = async data => {
         // console.log(data);
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({ displayName: data.name });
-        navigate('/appointment')
+
     };
 
     return (
