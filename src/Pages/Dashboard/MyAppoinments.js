@@ -1,10 +1,13 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 
 const MyAppoinments = () => {
     const [user] = useAuthState(auth);
+    const navigate = useNavigate();
 
     const url = `http://localhost:5000/booking?patient=${user?.email}`;
     // const url = `https://damp-basin-02445.herokuapp.com/booking?patient=${user?.email}`;
@@ -15,7 +18,15 @@ const MyAppoinments = () => {
         headers: {
             'authorization': `Bearer ${localStorage.getItem('accessToken')}`
         },
-    }).then(res => res.json()))
+    }).then(res => {
+        console.log('res: ', res);
+        if (res.status === 401 || res.status === 403) {
+            signOut(auth);
+            localStorage.removeItem('accessToken');
+            navigate('/');
+        }
+        return res.json();
+    }))
 
     if (isLoading) {
         return <button className="btn loading">loading</button>;
@@ -23,7 +34,7 @@ const MyAppoinments = () => {
 
     return (
         <div>
-            <h2 className=' text-secondary text-3xl my-2'>My Appoinments: {bookings.length}</h2>
+            <h2 className=' text-secondary text-3xl my-2'>My Appoinments: {bookings?.length}</h2>
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>
@@ -37,7 +48,7 @@ const MyAppoinments = () => {
                     </thead>
                     <tbody>
                         {
-                            bookings.map((b, index) => <tr
+                            bookings?.map((b, index) => <tr
                                 key={b._id}
                             >
                                 <th>{index + 1}</th>
