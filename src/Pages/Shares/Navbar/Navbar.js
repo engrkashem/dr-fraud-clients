@@ -9,7 +9,8 @@ const Navbar = () => {
 
 
     const LogOut = () => {
-        signOut(auth)
+        signOut(auth);
+        localStorage.removeItem('accessToken');
     }
 
     const links = <>
@@ -50,7 +51,7 @@ const Navbar = () => {
         }
     </>
     return (
-        <div className="navbar bg-base-100 ">
+        <div className="navbar bg-base-100">
             <div className="navbar-start font-semibold">
                 <div className="dropdown">
                     <label tabIndex="0" className="btn btn-ghost lg:hidden">
