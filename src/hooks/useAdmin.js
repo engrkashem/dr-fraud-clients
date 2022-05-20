@@ -6,7 +6,8 @@ const useAdmin = user => {
 
     useEffect(() => {
         const email = user?.email;
-        const url = `http://localhost:5000/admin/${email}`
+        // const url = `http://localhost:5000/admin/${email}`
+        const url = `https://damp-basin-02445.herokuapp.com/admin/${email}`
         if (email) {
             fetch(url, {
                 method: 'GET',

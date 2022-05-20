@@ -6,6 +6,7 @@ const UserRow = ({ user, index, refetch }) => {
 
     const makeAdmin = () => {
         const url = `http://localhost:5000/user/admin/${email}`;
+        // const url = `https://damp-basin-02445.herokuapp.com/user/admin/${email}`;
         fetch(url, {
             method: 'PUT',
             headers: {

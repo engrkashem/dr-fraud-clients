@@ -10,8 +10,8 @@ const MyAppoinments = () => {
     const [user] = useAuthState(auth);
     const navigate = useNavigate();
 
-    const url = `http://localhost:5000/booking?patient=${user?.email}`;
-    // const url = `https://damp-basin-02445.herokuapp.com/booking?patient=${user?.email}`;
+    // const url = `http://localhost:5000/booking?patient=${user?.email}`;
+    const url = `https://damp-basin-02445.herokuapp.com/booking?patient=${user?.email}`;
 
     //react query is used to load data
     const { data: bookings, isLoading } = useQuery(['availableSlots', user], () => fetch(url, {
