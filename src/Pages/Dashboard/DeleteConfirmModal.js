@@ -5,7 +5,8 @@ const DeleteConfirmModal = ({ doctorDelete, refetch, setDoctorDelete }) => {
     const { name, email } = doctorDelete;
 
     const deleteDoctor = () => {
-        const url = `http://localhost:5000/doctor/${email}`;
+        // const url = `http://localhost:5000/doctor/${email}`;
+        const url = `https://damp-basin-02445.herokuapp.com/doctor/${email}`;
         fetch(url, {
             method: 'DELETE',
             headers: {
