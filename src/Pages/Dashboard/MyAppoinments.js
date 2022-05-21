@@ -45,6 +45,7 @@ const MyAppoinments = () => {
                             <th className=' text-center'>Date</th>
                             <th className=' text-center'>Treatment</th>
                             <th className=' text-center'>Time</th>
+                            <th className=' text-center'>Payment</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -4,7 +4,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 const AppointmentModal = ({ treatment, date, setTreatment, user, formatedDate, refetch }) => {
-    const { _id, name, slots } = treatment;
+    const { _id, name, slots, price } = treatment;
     const { displayName, email } = user;
     // console.log(displayName, email)
 
@@ -17,6 +17,7 @@ const AppointmentModal = ({ treatment, date, setTreatment, user, formatedDate, r
             treatmentName: name,
             date: formatedDate,
             timeSlot,
+            price,
             patientEmail: email,
             patientName: displayName,
             phone: e.target.phone.value

@@ -6,7 +6,8 @@ import { toast } from 'react-toastify';
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
 
-    const url = `http://localhost:5000/services`;
+    // const url = `http://localhost:5000/services`;
+    const url = `https://damp-basin-02445.herokuapp.com/services`;
     const { data: services, isLoading } = useQuery('services', () => fetch(url).then(res => res.json()))
     // console.log(services)
 
@@ -46,7 +47,8 @@ const AddDoctor = () => {
                         img: img
                     };
                     //send to yor data base
-                    const url = `http://localhost:5000/doctor`;
+                    // const url = `http://localhost:5000/doctor`;
+                    const url = `https://damp-basin-02445.herokuapp.com/doctor`;
                     fetch(url, {
                         method: 'POST',
                         headers: {

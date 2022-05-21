@@ -3,8 +3,8 @@ import { useQuery } from 'react-query';
 import UserRow from './UserRow';
 
 const Users = () => {
-    const url = `http://localhost:5000/user`;
-    // const url = `https://damp-basin-02445.herokuapp.com/user`;
+    // const url = `http://localhost:5000/user`;
+    const url = `https://damp-basin-02445.herokuapp.com/user`;
     const { data: users, isLoading, refetch } = useQuery('allUsers', () => fetch(url, {
         method: 'GET',
         headers: {
